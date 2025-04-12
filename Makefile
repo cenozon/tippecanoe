@@ -10,7 +10,7 @@ CC := $(CC)
 CXX := $(CXX)
 CFLAGS := $(CFLAGS) -fPIE -DBUILD_INFO=$(BUILD_INFO)
 CXXFLAGS := $(CXXFLAGS) -std=c++17 -fPIE -DBUILD_INFO=$(BUILD_INFO)
-LDFLAGS := $(LDFLAGS)
+LDFLAGS := $(LDFLAGS) -static
 WARNING_FLAGS := -Wall -Wshadow -Wsign-compare -Wextra -Wunreachable-code -Wuninitialized -Wshadow
 RELEASE_FLAGS := -O3 -DNDEBUG
 DEBUG_FLAGS := -O0 -DDEBUG -fno-inline-functions -fno-omit-frame-pointer
@@ -57,7 +57,7 @@ H = $(wildcard *.h) $(wildcard *.hpp)
 C = $(wildcard *.c) $(wildcard *.cpp)
 
 INCLUDES = -I/usr/local/include -I. -Iclipper2/include
-LIBS = -L/usr/local/lib
+LIBS = -L/usr/local/lib -L/usr/lib
 
 tippecanoe: geojson.o jsonpull/jsonpull.o tile.o pool.o mbtiles.o geometry.o projection.o memfile.o mvt.o serial.o main.o platform.o text.o dirtiles.o pmtiles_file.o plugin.o read_json.o write_json.o geobuf.o flatgeobuf.o evaluator.o geocsv.o csv.o geojson-loop.o json_logger.o visvalingam.o compression.o clip.o sort.o attribute.o thread.o shared_borders.o clipper2/src/clipper.engine.o
 	$(CXX) $(PG) $(LIBS) $(FINAL_FLAGS) $(CXXFLAGS) -o $@ $^ $(LDFLAGS) -lm -lz -lsqlite3 -lpthread
